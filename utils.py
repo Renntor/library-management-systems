@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 
 def add_book(bd):
@@ -13,22 +14,19 @@ def add_book(bd):
             'year': int(input('Год издания: \n')),
             'status': 'в наличии'
         }
+        current_year = datetime.now().year
+        if 0 <= data['year'] <= current_year:
+            return f'Год может быть от 0 до {current_year}'
+
     except ValueError:
         return 'Поле year должно быть числовым\n', add_book(bd)
 
     with open(bd, 'r+', encoding='utf-8') as file:
         json_data = json.load(file)
-        try:
-            # проверка на то что в файле есть данные
-            data['id'] = json_data[-1]['id'] + 1
-        except IndexError:
-            data['id'] = 1
-        finally:
-            json_data.append(data)
-            file.seek(0)
-            file.truncate()
-            json.dump(json_data, file, indent=2, ensure_ascii=False)
-        return f'Книга успешно добавлена{json.dumps(json_data, indent=2, ensure_ascii=False)}\n'
+        file.seek(0)
+        file.truncate()
+        json.dump(json_data, file, indent=2, ensure_ascii=False)
+    return f'Книга успешно добавлена{json.dumps(json_data, indent=2, ensure_ascii=False)}\n'
 
 
 def get_book(bd):
