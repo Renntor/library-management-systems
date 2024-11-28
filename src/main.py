@@ -5,7 +5,7 @@ from utils import add_book, get_book, retrieve_book, delete_book, update_book
 if __name__ == '__main__':
     bd = 'bd.json'
     if os.path.exists(bd) is False:
-        with open('bd.json', 'w', encoding='utf-8') as file:
+        with open('../bd.json', 'w', encoding='utf-8') as file:
             file.write(
                 '[]'
             )

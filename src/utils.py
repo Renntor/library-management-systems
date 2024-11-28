@@ -15,7 +15,7 @@ def add_book(bd):
             'status': 'в наличии'
         }
         current_year = datetime.now().year
-        if 0 <= data['year'] <= current_year:
+        if not 0 <= data['year'] <= current_year:
             return f'Год может быть от 0 до {current_year}'
 
     except ValueError:
